@@ -1,0 +1,39 @@
+{
+  "actionButtons": {
+    "defaultColor": "#ff0034", // Can also use string color names.
+    "loadNpmCommands": false, // Disables automatic generation of actions for npm commands.
+    "reloadButton": "♻️", // Custom reload button text or icon (default ↻). null value enables automatic reload on configuration change
+    "commands": [
+      {
+        "name": "NVM 18",
+        "color": "white",
+        "singleInstance": true,
+        "command": "nvm use 18" // This is executed in the terminal.
+      },
+      //   {
+      //     "name": "Generate types",
+      //     "color": "white",
+      //     "singleInstance": true,
+      //     "command": "cd ./ape-api/generator/; node index.js " // This is executed in the terminal.
+      //   },
+      {
+        "name": "Frontend",
+        "color": "white",
+        "singleInstance": true,
+        "command": "cd ./client/ ; npm start " // This is executed in the terminal.
+      },
+      //   {
+      //     "name": "NewShop Backend",
+      //     "color": "white",
+      //     "singleInstance": true,
+      //     "command": "cd ./ape-webshop/ ; npm run api " // This is executed in the terminal.
+      //   },
+      {
+        "name": "Build",
+        "color": "white",
+        "singleInstance": true,
+        "command": "cd ./client/ ; npm build " // This is executed in the terminal.
+      }
+    ]
+  }
+}

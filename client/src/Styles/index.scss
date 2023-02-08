@@ -1,0 +1,47 @@
+* {
+  box-sizing: border-box;
+  transition: none !important;
+}
+body {
+  overflow: hidden;
+  margin: 0px;
+}
+#root {
+  overflow: hidden;
+  width: 100vw;
+  min-width: 100vw;
+  max-width: 100vw;
+  height: 100vh;
+  min-height: 100vh;
+  max-height: 100vh;
+}
+input:focus {
+  outline: none;
+}
+select:focus {
+  outline: none;
+}
+a,
+a:hover,
+a:focus,
+a:active {
+  text-decoration: none;
+  color: inherit;
+}
+.prevent-select {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+.fd-row {
+  display: flex;
+  flex-direction: row;
+}
+.fd-col {
+  display: flex;
+  flex-direction: column;
+}
+.__centered {
+  justify-content: center;
+  align-items: center;
+}
