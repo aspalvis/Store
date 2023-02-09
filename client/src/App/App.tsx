@@ -1,12 +1,21 @@
+import { observer } from "mobx-react";
 import AppWrapper from "../Components/AppWrapper/AppWrapper";
+import ColorPallete from "../Components/ColorPallete/ColorPallete";
 import Router from "./Router";
+import { ThemeProvider, createTheme } from "@mui/material";
+import { app } from "./store";
 
-function App() {
+const App = () => {
+  console.log("sss");
+
   return (
-    <AppWrapper>
-      <Router />
-    </AppWrapper>
+    <ThemeProvider theme={createTheme(app.theme.theme)}>
+      <AppWrapper>
+        <ColorPallete />
+        <Router />
+      </AppWrapper>
+    </ThemeProvider>
   );
-}
+};
 
-export default App;
+export default observer(App);
