@@ -1,5 +1,6 @@
-import { Box } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { ModuleLoaderObject } from "./Utils";
+import { Topbar } from "../Topbar/Topbar";
 
 interface Props {
   initialData: ModuleLoaderObject;
@@ -9,9 +10,21 @@ const ModuleLoader = (props: Props) => {
   const { initialData } = props;
 
   return (
-    <Box className="__moduleLoader">
-      <Box className="__tabs">{initialData.tabs}</Box>
-      <Box className="__module">{initialData.module}</Box>
+    <Box>
+      <Box>
+        <Topbar>
+          {/* {initialData.tabs} */}
+          <Button variant="contained">
+            <Typography variant="button">Start</Typography>
+          </Button>
+          <Button variant="contained">
+            <Typography variant="button">Start</Typography>
+          </Button>
+        </Topbar>
+      </Box>
+      <Box>
+        <Typography>{initialData.module}</Typography>
+      </Box>
     </Box>
   );
 };

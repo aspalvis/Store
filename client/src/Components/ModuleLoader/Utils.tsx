@@ -8,6 +8,11 @@ interface Settings {
   modulePosition: Orientation;
 }
 export class ModuleLoaderObject {
+  private _tabs;
+  module;
+  modulePosition;
+  useRouter;
+
   defaults: Settings = {
     module: <Outlet />,
     tabs: null,
@@ -15,23 +20,21 @@ export class ModuleLoaderObject {
     useRouter: false,
   };
 
-  module;
-  tabs;
-  modulePosition;
-  useRouter;
-
   constructor(settings?: Settings) {
     if (settings) {
       this.module = settings.module;
-      this.tabs = settings.tabs;
+      this._tabs = settings.tabs;
       this.modulePosition = settings.modulePosition;
       this.useRouter = settings.useRouter;
     } else {
       this.module = this.defaults.module;
-      this.tabs = this.defaults.tabs;
+      this._tabs = this.defaults.tabs;
       this.modulePosition = this.defaults.modulePosition;
       this.useRouter = this.defaults.useRouter;
     }
+  }
+  get tabs() {
+    return this._tabs;
   }
   // navigationLinks: {
   //   id: string;
@@ -42,6 +45,6 @@ export class ModuleLoaderObject {
   //   onClick?: () => void;
   // }[] = [];
   get isSingleTab(): boolean {
-    return Children.count(this.tabs) === 1;
+    return Children.count(this._tabs) === 1;
   }
 }
