@@ -2,6 +2,7 @@ import { Box, styled } from "@mui/material";
 
 export const ModuleContainer = styled(Box)(({ theme }) => {
   return {
-    // backgroundColor
+    width: "100%",
+    height: "100%",
   };
 });

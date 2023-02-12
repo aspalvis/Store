@@ -1,9 +1,10 @@
 import { Button, Input, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
-import { app } from "../../App/store";
+
 import { observer } from "mobx-react";
+import { themes } from "../../Styles/Themes";
 
 const ColorPallete = () => {
-  if (!app.theme.isPaletteOpened) {
+  if (!themes.isPaletteOpened) {
     return <></>;
   }
   return (
@@ -24,12 +25,13 @@ const ColorPallete = () => {
         <TableRow>
           <TableCell>Primary</TableCell>
           <TableCell>Secondary</TableCell>
-          <TableCell>Typography</TableCell>
+          <TableCell>Background</TableCell>
+          <TableCell>Text</TableCell>
           <TableCell>
             <Button
               variant="contained"
               onClick={() => {
-                app.theme.isPaletteOpened = false;
+                themes.isPaletteOpened = false;
               }}
             >
               Close
@@ -41,20 +43,23 @@ const ColorPallete = () => {
         <TableRow>
           <TableCell>
             <Input
-              value={app.theme.ColorPrimary}
+              value={themes.colors.primary}
               onChange={(e) => {
-                app.theme.ColorPrimary = e.target.value;
+                themes.colors.primary = e.target.value;
               }}
             />
           </TableCell>
           <TableCell>
-            <Input value={app.theme.ColorSecondary} onChange={(e) => (app.theme.ColorSecondary = e.target.value)} />
+            <Input value={themes.colors.secondary} onChange={(e) => (themes.colors.secondary = e.target.value)} />
           </TableCell>
           <TableCell>
             <Input
-              value={app.theme.ColorBackgroundPaper}
-              onChange={(e) => (app.theme.ColorBackgroundPaper = e.target.value)}
+              value={themes.colors.background.main}
+              onChange={(e) => (themes.colors.background.main = e.target.value)}
             />
+          </TableCell>
+          <TableCell>
+            <Input value={themes.colors.text.main} onChange={(e) => (themes.colors.text.main = e.target.value)} />
           </TableCell>
         </TableRow>
       </TableBody>

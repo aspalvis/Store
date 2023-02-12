@@ -1,9 +1,5 @@
-import Themes from "../Styles/Themes";
 class App {
-  theme: typeof Themes;
-  constructor() {
-    this.theme = Themes;
-  }
+  constructor() {}
 }
 export const app = new App();
 //@ts-ignore

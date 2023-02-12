@@ -1,18 +1,60 @@
 import { ThemeOptions } from "@mui/material";
-import { autorun, makeAutoObservable, toJS } from "mobx";
+import { CSSProperties } from "@mui/material/styles/createMixins";
+import { autorun, makeAutoObservable } from "mobx";
+export type StylesObject = { [key: string]: CSSProperties };
 class Themes {
+  private _theme: ThemeOptions | undefined = undefined;
+  get theme() {
+    return this._theme;
+  }
+  colors = {
+    _primary: "#29374a",
+    get primary() {
+      return this._primary;
+    },
+    set primary(value: string) {
+      this._primary = value;
+    },
+    _secondary: "#d2c17a",
+    get secondary() {
+      return this._secondary;
+    },
+    set secondary(value: string) {
+      this._secondary = value;
+    },
+    text: {
+      _main: "#d2c17a",
+      get main() {
+        return this._main;
+      },
+      set main(value: string) {
+        this._main = value;
+      },
+    },
+    background: {
+      _main: "#29374a",
+      get main() {
+        return this._main;
+      },
+      set main(value: string) {
+        this._main = value;
+      },
+      paper: "#364355",
+    },
+  };
   constructor() {
     makeAutoObservable(this);
     autorun(() => {
       this.updateTheme();
     });
   }
+
   updateTheme() {
     const item: ThemeOptions = {
       palette: {
-        background: { default: this._ColorBackground, paper: this._ColorBackgroundPaper },
-        primary: { main: this._ColorPrimary },
-        secondary: { main: this._ColorSecondary },
+        background: { default: this.colors.background.main, paper: this.colors.background.paper },
+        primary: { main: this.colors.primary },
+        secondary: { main: this.colors.secondary },
       },
       typography: {
         fontSize: 16,
@@ -21,60 +63,21 @@ class Themes {
         fontWeightMedium: 600,
         fontWeightLight: 400,
         fontWeightRegular: 400,
-        allVariants: { color: this._ColorBackgroundPaper },
+        allVariants: { color: this.colors.text.main },
       },
     };
     this._theme = item;
   }
-  private _paletteIsOpened = false;
+  private _paletteIsOpened = true;
   get isPaletteOpened() {
     return this._paletteIsOpened;
   }
   set isPaletteOpened(value: boolean) {
     this._paletteIsOpened = value;
   }
-
-  private _ColorPrimary = "#002b6e";
-  get ColorPrimary() {
-    return this._ColorPrimary;
-  }
-  set ColorPrimary(value: string) {
-    this._ColorPrimary = value;
-  }
-
-  private _ColorSecondary = "#b38b53";
-  get ColorSecondary() {
-    return this._ColorSecondary;
-  }
-  set ColorSecondary(value: string) {
-    this._ColorSecondary = value;
-  }
-
-  private _ColorThird = "#b38b53";
-  get ColorThird() {
-    return this._ColorThird;
-  }
-  set ColorThird(value: string) {
-    this._ColorThird = value;
-  }
-  private _ColorBackground = "#002b6e";
-  get ColorBackground() {
-    return this._ColorBackground;
-  }
-  set ColorBackground(value: string) {
-    this._ColorBackground = value;
-  }
-  private _ColorBackgroundPaper = "#fefffe";
-  get ColorBackgroundPaper() {
-    return this._ColorBackgroundPaper;
-  }
-  set ColorBackgroundPaper(value: string) {
-    this._ColorBackgroundPaper = value;
-  }
-
-  private _theme: ThemeOptions | undefined = undefined;
-  get theme() {
-    return this._theme;
-  }
 }
-export default new Themes();
+const themes = new Themes();
+//@ts-ignore
+window.themes = themes;
+
+export { themes };

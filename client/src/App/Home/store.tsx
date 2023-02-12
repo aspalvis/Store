@@ -1,11 +1,17 @@
+import { Typography } from "@mui/material";
 import { ModuleLoaderObject } from "../../Components/ModuleLoader/Utils";
 import { app } from "../store";
 
 class HomePage {
   module = new ModuleLoaderObject({
-    module: <div>Hello</div>,
+    module: <Typography>Hello</Typography>,
     modulePosition: "left",
-    tabs: [<div>Tab1</div>, <div>Tab2</div>, <div>Tab3</div>, <div>Tab4</div>],
+    tabs: [
+      <Typography>Tab1</Typography>,
+      <Typography>Tab2</Typography>,
+      <Typography>Tab3</Typography>,
+      <Typography>Tab4</Typography>,
+    ],
     useRouter: false,
   });
 }

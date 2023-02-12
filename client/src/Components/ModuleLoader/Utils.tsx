@@ -19,6 +19,7 @@ export class ModuleLoaderObject {
     modulePosition: "left",
     useRouter: false,
   };
+  onMenuOpen = () => {};
 
   constructor(settings?: Settings) {
     if (settings) {
