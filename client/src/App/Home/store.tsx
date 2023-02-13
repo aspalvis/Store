@@ -6,7 +6,7 @@ class HomePage {
   module = new ModuleLoaderObject({
     module: <Typography>Hello</Typography>,
     modulePosition: "left",
-    tabs: [
+    navItems: [
       <Typography>Tab1</Typography>,
       <Typography>Tab2</Typography>,
       <Typography>Tab3</Typography>,

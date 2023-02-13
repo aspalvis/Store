@@ -1,4 +1,4 @@
-import { ThemeOptions } from "@mui/material";
+import { ThemeOptions, darken, lighten } from "@mui/material";
 import { CSSProperties } from "@mui/material/styles/createMixins";
 import { autorun, makeAutoObservable } from "mobx";
 export type StylesObject = { [key: string]: CSSProperties };
@@ -23,7 +23,7 @@ class Themes {
       this._secondary = value;
     },
     text: {
-      _main: "#d2c17a",
+      _main: "#fafafa",
       get main() {
         return this._main;
       },
@@ -39,7 +39,10 @@ class Themes {
       set main(value: string) {
         this._main = value;
       },
-      paper: "#364355",
+      get paper() {
+        return "#FFFFFF";
+        // return lighten(this.main, 0.02);
+      },
     },
   };
   constructor() {
@@ -53,8 +56,19 @@ class Themes {
     const item: ThemeOptions = {
       palette: {
         background: { default: this.colors.background.main, paper: this.colors.background.paper },
-        primary: { main: this.colors.primary },
-        secondary: { main: this.colors.secondary },
+        primary: {
+          main: this.colors.primary,
+          dark: darken(this.colors.primary, 0.5),
+          light: lighten(this.colors.primary, 0.5),
+          contrastText: this.colors.text.main,
+        },
+
+        secondary: {
+          main: this.colors.secondary,
+          dark: darken(this.colors.secondary, 0.5),
+          light: lighten(this.colors.secondary, 0.5),
+          contrastText: this.colors.text.main,
+        },
       },
       typography: {
         fontSize: 16,
@@ -63,7 +77,7 @@ class Themes {
         fontWeightMedium: 600,
         fontWeightLight: 400,
         fontWeightRegular: 400,
-        allVariants: { color: this.colors.text.main },
+        allVariants: { color: this.colors.text.main, alignSelf: "center" },
       },
     };
     this._theme = item;
