@@ -1,20 +1,22 @@
 import MenuIcon from "@mui/icons-material/Menu";
-import { ModuleLoaderObject } from "./Utils";
+import { ModuleObject } from "./Utils";
 import { Topbar } from "../Topbar/Topbar";
 import IconButton from "@mui/material/IconButton";
 import { ModuleContent } from "./Styled/ModuleContent";
 import { ModuleContainer } from "./Styled/ModuleContainer";
-import { Box, SwipeableDrawer } from "@mui/material";
 import { observer } from "mobx-react";
 import { ModuleSideBar } from "./Styled/ModuleSideBar";
 import { ModuleContentContainer } from "./Styled/ModuleContentContainer";
+import { ReactNode } from "react";
+import { Outlet } from "react-router-dom";
 
 interface Props {
-  initialData: ModuleLoaderObject;
+  initialData: ModuleObject;
+  children?: ReactNode;
 }
 
-const ModuleLoader = (props: Props) => {
-  const { initialData } = props;
+const ModuleComponent = (props: Props) => {
+  const { initialData, children = <Outlet /> } = props;
 
   return (
     <ModuleContainer>
@@ -23,15 +25,15 @@ const ModuleLoader = (props: Props) => {
           <MenuIcon color="secondary" />
         </IconButton>
         <div className="fd-row" style={{ gap: "40px" }}>
-          {initialData.navItems}
+          {initialData.links}
         </div>
       </Topbar>
       <ModuleContentContainer>
-        <ModuleSideBar sx={{ width: initialData.sidebarWidth }}>{initialData.navItems}</ModuleSideBar>
-        <ModuleContent>{initialData.module}</ModuleContent>
+        <ModuleSideBar sx={{ width: initialData.sidebarWidth }}>{initialData.links}</ModuleSideBar>
+        <ModuleContent>{children}</ModuleContent>
       </ModuleContentContainer>
     </ModuleContainer>
   );
 };
 
-export default observer(ModuleLoader);
+export const Module = observer(ModuleComponent);

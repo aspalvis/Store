@@ -1,27 +1,23 @@
 import { Children, ReactNode } from "react";
-import { Outlet } from "react-router-dom";
-import { fillItem } from "../../Utils/ObjectMethods";
 import { makeAutoObservable } from "mobx";
 type Orientation = "top" | "bottom" | "left" | "right";
+
+type ModuleLinks = ReactNode;
+
 interface Settings {
-  module: ReactNode;
-  navItems: ReactNode;
+  links?: ReactNode;
   useRouter?: boolean;
-  modulePosition?: Orientation;
+  direction?: Orientation;
   opened?: boolean;
   sidebarWidth?: number;
 }
-export class ModuleLoaderObject {
-  // opened;
-  // navItems;
-  // module;
-  // modulePosition;
-  // useRouter;
-
+export class ModuleObject {
+  constructor(private _settings?: Settings) {
+    makeAutoObservable(this);
+  }
   defaults: Settings = {
-    module: <Outlet />,
-    navItems: null,
-    modulePosition: "left",
+    links: null,
+    direction: "left",
     useRouter: false,
     opened: true,
     sidebarWidth: 300,
@@ -30,23 +26,17 @@ export class ModuleLoaderObject {
     this.opened = !this.opened;
   };
 
-  set module(value: Settings["module"]) {
-    this.defaults.module = value;
+  set links(value: Settings["links"]) {
+    this.defaults.links = value;
   }
-  get module() {
-    return this._settings?.module ?? this.defaults.module;
+  get links() {
+    return this._settings?.links ?? this.defaults.links;
   }
-  set navItems(value: Settings["navItems"]) {
-    this.defaults.navItems = value;
+  set direction(value: Settings["direction"]) {
+    this.defaults.direction = value;
   }
-  get navItems() {
-    return this._settings?.navItems ?? this.defaults.navItems;
-  }
-  set modulePosition(value: Settings["modulePosition"]) {
-    this.defaults.modulePosition = value;
-  }
-  get modulePosition() {
-    return this._settings?.modulePosition ?? this.defaults.modulePosition;
+  get direction() {
+    return this._settings?.direction ?? this.defaults.direction;
   }
   set useRouter(value: Settings["useRouter"]) {
     this.defaults.useRouter = value;
@@ -70,11 +60,7 @@ export class ModuleLoaderObject {
     return this._settings?.sidebarWidth ?? this.defaults.sidebarWidth;
   }
 
-  constructor(private _settings?: Settings) {
-    makeAutoObservable(this);
-  }
-
   get isSingleTab(): boolean {
-    return Children.count(this.navItems) === 1;
+    return Children.count(this.links) === 1;
   }
 }

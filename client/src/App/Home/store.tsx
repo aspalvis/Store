@@ -1,20 +1,18 @@
-import { Typography } from "@mui/material";
-import { ModuleLoaderObject } from "../../Components/ModuleLoader/Utils";
+import { ModuleObject } from "../../Components/ModuleLoader/Utils";
 import { app } from "../store";
+import { makeObservable, observable } from "mobx";
 
 class HomePage {
-  module = new ModuleLoaderObject({
-    module: <Typography>Hello</Typography>,
-    modulePosition: "left",
-    navItems: [
-      <Typography>Tab1</Typography>,
-      <Typography>Tab2</Typography>,
-      <Typography>Tab3</Typography>,
-      <Typography>Tab4</Typography>,
-    ],
-    useRouter: false,
-  });
+  constructor() {
+    makeObservable(this, { testMutations: observable });
+  }
+  module = new ModuleObject();
+  testMutations = {
+    username: "andris",
+    age: 20,
+  };
 }
+
 const home = new HomePage();
 const store = { ...app, home };
 
