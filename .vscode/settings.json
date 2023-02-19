@@ -22,12 +22,12 @@
         "singleInstance": true,
         "command": "cd ./client/ ; npm start " // This is executed in the terminal.
       },
-      //   {
-      //     "name": "NewShop Backend",
-      //     "color": "white",
-      //     "singleInstance": true,
-      //     "command": "cd ./ape-webshop/ ; npm run api " // This is executed in the terminal.
-      //   },
+      {
+        "name": "Backend",
+        "color": "white",
+        "singleInstance": true,
+        "command": "cd ./server/ ; npm run dev " // This is executed in the terminal.
+      },
       {
         "name": "Build",
         "color": "white",
