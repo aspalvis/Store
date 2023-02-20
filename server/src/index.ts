@@ -4,11 +4,14 @@ import cors from "cors";
 import { PasswordEncrypter } from "./Middleware/BodyParser";
 import bodyParser from "body-parser";
 import { Logger } from "./Middleware/Logger";
+import helmet from "helmet";
 
 dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT || 4000;
+app.use(helmet());
+app.use(express.static("public"));
 app.use(
   cors({
     origin: "http://localhost:3000",
