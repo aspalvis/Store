@@ -9,24 +9,19 @@ import { Authentificator } from "./Middleware/Auth/Auth";
 import cookieParser from "cookie-parser";
 import { Session } from "./Middleware/Auth/Models/Session";
 import ServerCrypting from "./Crypto/Crypto";
+import User, { IUser } from "./MongoDB/Models/User";
+import mongoose, { Connection } from "mongoose";
+import { db } from "./MongoDB/Connection";
 dotenv.config();
 
 const app: Express = express();
-
-const Users = [
-  {
-    username: "andris",
-    password: "U2FsdGVkX18Zv27nefiuKPt3kzlSi6nYI5gZWztxdmU=",
-    roleId: "admin",
-  },
-];
-
 const port = process.env.PORT || 4002;
+
 app.use(helmet());
 app.use(express.static("public"));
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: true,
     credentials: true,
   })
 );
@@ -37,32 +32,8 @@ app.use(Logger);
 app.use(PasswordEncrypter);
 app.use(Authentificator);
 
-app.get("/", async (req: Request, res: Response, next: NextFunction) => {
-  res.send("Welcome to the main route");
-});
-
-app.post("/login", async (req: Request, res: Response, next: NextFunction) => {
-  const { username, password } = req.body;
-  const user = Users.find((details) => {
-    const decryptedPassword = ServerCrypting.Decrypt(details.password);
-    return decryptedPassword === password && details.username === username;
-  });
-  if (!user) {
-    return res.status(401).send("Password or username is not correct");
-  }
-  const sessinon = new Session({ username, roleId: user.roleId });
-
-  res.cookie("accessToken", sessinon.accessToken, {
-    httpOnly: true,
-  });
-  res.cookie("sid", sessinon.SID, { httpOnly: true });
-  res.json(sessinon);
-});
-app.post("/password", async (req: Request, res: Response) => {
-  console.log("ssss");
-
-  res.json(req.body.password);
-});
+mongoose.set("strictQuery", true);
+app.use(require("./Router/Router"));
 
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);

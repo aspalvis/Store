@@ -15,7 +15,6 @@ export const Logger = (req: Request, res: Response, next: NextFunction) => {
     "route":"${req.url}",
     "data":${JSON.stringify(req.body)},
     "method":"${req.method}",
-    "cookies":"${req.cookies}",
     "dateCreated":"${new Date().toISOString()}"\n},`;
 
   fs.appendFile(filePath, entry, (err) => {

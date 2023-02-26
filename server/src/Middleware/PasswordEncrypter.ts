@@ -6,7 +6,7 @@ export function PasswordEncrypter(
   res: Response,
   next: NextFunction
 ) {
-  if (req.body.password && req.url !== "/login")
+  if (req.body.password && req.url !== "/auth/login")
     req.body.password = ServerCrypting.Encrypt(req.body.password);
   next();
 }

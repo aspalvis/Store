@@ -1,15 +1,15 @@
 import ServerCrypting from "../../../Crypto/Crypto";
-import { decode, sign, verify } from "jsonwebtoken";
+import { JwtPayload, decode, sign, verify } from "jsonwebtoken";
 
 interface UserData {
-  username: string;
+  email: string;
   roleId: string;
 }
 
 export class Session implements UserData {
-  username;
+  email;
   roleId;
-  SID;
+  sessionId;
   accessToken;
   refreshToken;
   dateCreated;
@@ -21,18 +21,18 @@ export class Session implements UserData {
     const ExpiresIn = process.env.TOKENEXPIRES as string;
     const ExpiresInRefresh = process.env.TOKENEXPIRESREFRESH as string;
 
-    this.username = data.username;
+    this.sessionId = ServerCrypting.GenerateSID();
+    this.email = data.email;
     this.roleId = data.roleId;
-    this.SID = ServerCrypting.GenerateSID();
     this.accessToken = sign(
-      { username: data.username, roleId: data.roleId },
+      { email: data.email, roleId: data.roleId },
       Secret,
       {
         expiresIn: ExpiresIn,
       }
     );
     this.refreshToken = sign(
-      { username: data.username, roleId: data.roleId, refresh: true },
+      { email: data.email, roleId: data.roleId, refresh: true },
       SecretRefresh,
       {
         expiresIn: ExpiresInRefresh,
@@ -46,5 +46,9 @@ export class Session implements UserData {
   destroy() {
     this.dateDestroyed = new Date();
     this.accessToken = "";
+  }
+  get refreshExp() {
+    const decoded = decode(this.refreshToken) as JwtPayload;
+    return decoded.exp;
   }
 }

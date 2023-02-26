@@ -5,12 +5,13 @@ interface IPermissions {
   isAllowed: boolean;
 }
 
-interface IUser extends Document {
+// export interface IUser extends Document {
+export interface IUser extends Document {
   name: string;
   email: string;
   password: string;
   isAdmin: boolean;
-  roleId?: string;
+  roleId: string;
   token?: string;
   tokenExpire?: Date;
   shippingAddress: {
@@ -50,6 +51,8 @@ const userSchema: Schema = new mongoose.Schema(
     },
     roleId: {
       type: String,
+      required: true,
+      default: "user",
     },
     token: {
       type: String,
