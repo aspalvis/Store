@@ -1,14 +1,12 @@
-import { connect } from "mongoose";
+import { connect, connection } from "mongoose";
 
 export class db {
   static async Connect() {
-    connect("mongodb://localhost:27017/store")
-      .then(() => {
-        console.log("Connection succeed");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    return connect("mongodb://localhost:27017/store").catch((err) => {
+      console.log(err);
+    });
   }
-  static async Close() {}
+  static async Close() {
+    return connection.close();
+  }
 }

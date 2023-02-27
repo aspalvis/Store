@@ -10,8 +10,6 @@ export const Authentificator = async (
   next: NextFunction
 ) => {
   if (req.url !== "/auth/login") {
-    console.log("url  = " + req.url);
-
     if (!req.cookies.accessToken) {
       return res.sendStatus(401);
     }
@@ -65,9 +63,11 @@ export const Authentificator = async (
         } else {
           res.cookie("accessToken", refreshToken.accessToken);
         }
+
         next();
+      } else {
+        res.status(401).send(error);
       }
-      res.status(401).send(error);
     }
   } else {
     next();

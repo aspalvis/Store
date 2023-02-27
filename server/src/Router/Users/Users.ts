@@ -1,34 +1,21 @@
 import { Router, Request, Response } from "express";
 import { db } from "../../MongoDB/Connection";
 import User, { IUser } from "../../MongoDB/Models/User";
+import { UsersController } from "../../MongoDB/Controllers/User";
 
 const router = Router();
-router.get("", (req, res) => {
-  res.send("huhuhuh");
+const usersController = new UsersController();
+
+router.get("", async (req, res) => {
+  const users = await usersController.fetch();
+  res.json(users);
 });
 router.post("/create", async (req: Request, res: Response) => {
-  try {
-    db.Connect();
-    const { email, name, password, shippingAddress, roleId } =
-      req.body as IUser;
-    const user = new User({ email, name, password, shippingAddress, roleId });
-    const response = await user.save();
-
-    res.json(response);
-  } catch (error) {
-    res.json(error);
-  }
+  const user = await usersController.create(req.body);
+  res.json(user);
 });
-router.post("/update", async (req: Request, res: Response) => {
-  try {
-    db.Connect();
-    const { email, name, password, shippingAddress } = req.body as IUser;
-    const user = new User({ email, name, password, shippingAddress });
-    const response = await user.save();
-
-    res.json(response);
-  } catch (error) {
-    res.json(error);
-  }
+router.post("/:id/update", async (req: Request, res: Response) => {
+  const user = await usersController.updateById(req.params.id, req.body);
+  res.json(user);
 });
 export = router;
