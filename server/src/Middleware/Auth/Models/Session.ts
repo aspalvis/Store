@@ -2,12 +2,12 @@ import ServerCrypting from "../../../Crypto/Crypto";
 import { JwtPayload, decode, sign, verify } from "jsonwebtoken";
 
 interface UserData {
-  email: string;
+  userId: string;
   roleId: string;
 }
 
 export class Session implements UserData {
-  email;
+  userId;
   roleId;
   sessionId;
   accessToken;
@@ -22,17 +22,17 @@ export class Session implements UserData {
     const ExpiresInRefresh = process.env.TOKENEXPIRESREFRESH as string;
 
     this.sessionId = ServerCrypting.GenerateSID();
-    this.email = data.email;
+    this.userId = data.userId;
     this.roleId = data.roleId;
     this.accessToken = sign(
-      { email: data.email, roleId: data.roleId },
+      { userId: data.userId, roleId: data.roleId },
       Secret,
       {
         expiresIn: ExpiresIn,
       }
     );
     this.refreshToken = sign(
-      { email: data.email, roleId: data.roleId, refresh: true },
+      { userId: data.userId, roleId: data.roleId, refresh: true },
       SecretRefresh,
       {
         expiresIn: ExpiresInRefresh,

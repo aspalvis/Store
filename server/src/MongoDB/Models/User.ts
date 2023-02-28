@@ -10,10 +10,9 @@ export interface IUser extends Document {
   name: string;
   email: string;
   password: string;
-  isAdmin: boolean;
+
   roleId: string;
-  token?: string;
-  tokenExpire?: Date;
+
   shippingAddress: {
     fullName: string;
     address: string;
@@ -39,26 +38,28 @@ const userSchema: Schema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
+      lowercase: true,
+      validate: {
+        validator: function (email: string) {
+          return String(email)
+            .toLowerCase()
+            .match(
+              /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            );
+        },
+        message: "Email format is not correct",
+      },
     },
     password: {
       type: String,
       required: true,
     },
-    isAdmin: {
-      type: Boolean,
-      required: true,
-      default: false,
-    },
+
     roleId: {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: "Role",
       required: true,
       default: "user",
-    },
-    token: {
-      type: String,
-    },
-    tokenExpire: {
-      type: Date,
     },
     shippingAddress: {
       fullName: {
@@ -82,6 +83,8 @@ const userSchema: Schema = new mongoose.Schema(
     },
     cardNumber: {
       type: String,
+      uppercase: true,
+      get: (v: any) => v.toUpperCase(),
     },
     cardName: {
       type: String,
@@ -94,15 +97,8 @@ const userSchema: Schema = new mongoose.Schema(
     },
     permissions: [
       {
-        permission: {
-          type: String,
-          required: true,
-        },
-        isAllowed: {
-          type: Boolean,
-          required: true,
-          default: false,
-        },
+        type: Schema.Types.ObjectId,
+        ref: "Permission",
       },
     ],
   },

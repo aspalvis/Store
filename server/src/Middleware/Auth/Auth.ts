@@ -16,9 +16,9 @@ export const Authentificator = async (
     const { accessToken } = req.cookies;
     try {
       const decoded = Session.ValidateToken(accessToken);
-      const { email, roleId } = decoded as JwtPayload;
+      const { userId, roleId } = decoded as JwtPayload;
 
-      req.body.requestUser = email;
+      req.body.requestUserId = userId;
       req.body.requestUserRoleId = roleId;
 
       next();
@@ -31,7 +31,7 @@ export const Authentificator = async (
         const refreshToken = await RefreshToken.findOne({
           $and: [
             {
-              userId: decoded.email,
+              userId: decoded.userId,
             },
             {
               $or: [
@@ -52,7 +52,7 @@ export const Authentificator = async (
 
         if (refreshToken.expires < Date.now()) {
           const sessionNew = new Session({
-            email: decoded.email,
+            userId: decoded.userId,
             roleId: decoded.roleId,
           });
           refreshToken.accessToken = sessionNew.accessToken;

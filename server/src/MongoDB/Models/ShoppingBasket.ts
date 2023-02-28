@@ -11,13 +11,15 @@ interface IShoppingBasket extends Document {
 const shoppingBasketSchema: Schema = new mongoose.Schema(
   {
     userId: {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: "User",
       required: true,
     },
     products: [
       {
         productId: {
-          type: String,
+          type: Schema.Types.ObjectId,
+          ref: "Product",
           required: true,
         },
         quantity: {

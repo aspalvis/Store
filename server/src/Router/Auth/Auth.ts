@@ -12,23 +12,23 @@ router.post("/login", async (req: Request, res: Response) => {
   const { email, password } = req.body as IUser;
   const user = await User.findOne({ email });
   if (!user) {
-    return res.status(404).send("User does not exist");
+    return res.status(400).send("User does not exist");
   }
   const isMatch = ServerCrypting.Decrypt(user.password) === password;
   if (!isMatch) {
-    return res.status(403).send("Password is not correct");
+    return res.status(400).send("Password is not correct");
   }
-  const sessinon = new Session({ email, roleId: user.roleId });
+  const sessinon = new Session({ userId: user._id, roleId: user.roleId });
   const refresh = new RefreshToken({
     refreshToken: sessinon.refreshToken,
     accessToken: sessinon.accessToken,
-    userId: sessinon.email,
+    userId: sessinon.userId,
     expires: sessinon.refreshExp,
   });
-  const refreshResponse = await refresh.save();
+  await refresh.save();
   res.cookie("accessToken", sessinon.accessToken, {
     httpOnly: true,
   });
-  res.json(refreshResponse);
+  res.sendStatus(200);
 });
 export = router;

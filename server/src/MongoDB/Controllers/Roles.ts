@@ -1,28 +1,28 @@
 import { connection } from "mongoose";
 import { db } from "../Connection";
-import User, { IUser } from "../Models/User";
+import { IRole, Role } from "../Models/Role";
 
-export class UsersController {
+export class RolesController {
   fetchPage = async (pageNumber: number, pageSize: number) => {
     try {
       await db.Connect();
-      const users = await User.find()
+      const roles = await Role.find()
         .skip((pageNumber - 1) * pageSize)
         .limit(pageSize)
-        .sort({ name: 1 })
-        .select("-password");
-      return users;
+        .sort({ name: 1 });
+      return roles;
     } catch (error) {
       return error;
     } finally {
       db.Close();
     }
   };
-  create = async (params: IUser) => {
+  create = async (params: IRole) => {
     try {
       await db.Connect();
-      const user = new User(params);
-      const response = await user.save();
+      const role = new Role(params);
+
+      const response = await role.save();
 
       return response;
     } catch (error) {
@@ -34,25 +34,25 @@ export class UsersController {
   fetch = async () => {
     try {
       await db.Connect();
-      const users = await User.find().select("-password");
-      return users;
+      const roles = await Role.find();
+      return roles;
     } catch (error) {
       return error;
     } finally {
       db.Close();
     }
   };
-  updateById = async (id: string, params: IUser) => {
+  updateById = async (id: string, params: IRole) => {
     try {
       await db.Connect();
-      const user = await User.findByIdAndUpdate(id, params, {
+      const role = await Role.findByIdAndUpdate(id, params, {
         new: true,
         runValidators: true,
-      }).select("-password");
-      if (!user) {
-        return "User not found";
+      });
+      if (!role) {
+        return "Role not found";
       }
-      return user;
+      return role;
     } catch (error) {
       return error;
     } finally {
