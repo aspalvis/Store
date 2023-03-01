@@ -1,8 +1,7 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Response, Request } from "express";
 import { Session } from "./Models/Session";
 import { JwtPayload, decode, sign } from "jsonwebtoken";
 import { RefreshToken } from "../../MongoDB/Models/RefreshToken";
-import { db } from "../../MongoDB/Connection";
 
 export const Authentificator = async (
   req: Request,
@@ -16,22 +15,20 @@ export const Authentificator = async (
     const { accessToken } = req.cookies;
     try {
       const decoded = Session.ValidateToken(accessToken);
-      const { userId, roleId } = decoded as JwtPayload;
+      const { _id, _roleId } = decoded as JwtPayload;
 
-      req.body.requestUserId = userId;
-      req.body.requestUserRoleId = roleId;
+      req.body._id = _id;
+      req.body._roleId = _roleId;
 
       next();
     } catch (error) {
       const { name } = error as any;
       if (name && name === "TokenExpiredError") {
         const decoded = decode(accessToken) as JwtPayload;
-        await db.Connect();
-
         const refreshToken = await RefreshToken.findOne({
           $and: [
             {
-              userId: decoded.userId,
+              userId: decoded._id,
             },
             {
               $or: [
@@ -49,11 +46,11 @@ export const Authentificator = async (
         if (!refreshToken) {
           return res.sendStatus(401);
         }
-
+        //TODO:Token should be encrypted in DB
         if (refreshToken.expires < Date.now()) {
           const sessionNew = new Session({
-            userId: decoded.userId,
-            roleId: decoded.roleId,
+            _id: decoded._id,
+            _roleId: decoded._roleId,
           });
           refreshToken.accessToken = sessionNew.accessToken;
           refreshToken.prevTokens.unshift(sessionNew.accessToken);

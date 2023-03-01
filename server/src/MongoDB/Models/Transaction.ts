@@ -1,21 +1,21 @@
-import mongoose, { Document, Schema, Model } from "mongoose";
+import mongoose from "../Connection";
 
-interface ITransaction extends Document {
+interface ITransaction extends mongoose.Document {
   userId: string;
   orderId: string;
   amount: number;
   status: string;
 }
 
-const transactionSchema: Schema = new mongoose.Schema(
+const transactionSchema: mongoose.Schema = new mongoose.Schema(
   {
     userId: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
     orderId: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Order",
       required: true,
     },
@@ -32,7 +32,7 @@ const transactionSchema: Schema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Transaction: Model<ITransaction> = mongoose.model<ITransaction>(
+const Transaction: mongoose.Model<ITransaction> = mongoose.model<ITransaction>(
   "Transaction",
   transactionSchema
 );

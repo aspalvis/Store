@@ -1,6 +1,4 @@
 import { Router, Request, Response } from "express";
-import { db } from "../../MongoDB/Connection";
-import User, { IUser } from "../../MongoDB/Models/User";
 import { UsersController } from "../../MongoDB/Controllers/User";
 
 const router = Router();

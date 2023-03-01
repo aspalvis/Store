@@ -1,21 +1,21 @@
-import mongoose, { Document, Schema, Model } from "mongoose";
+import mongoose from "../Connection";
 
-interface IReview extends Document {
+interface IReview extends mongoose.Document {
   userId: string;
   productId: string;
   rating: number;
   comment: string;
 }
 
-const reviewSchema: Schema = new mongoose.Schema(
+const reviewSchema: mongoose.Schema = new mongoose.Schema(
   {
     userId: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
     productId: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Product",
       required: true,
     },
@@ -35,6 +35,9 @@ const reviewSchema: Schema = new mongoose.Schema(
   }
 );
 
-const Review: Model<IReview> = mongoose.model<IReview>("Review", reviewSchema);
+const Review: mongoose.Model<IReview> = mongoose.model<IReview>(
+  "Review",
+  reviewSchema
+);
 
 export default Review;

@@ -1,0 +1,22 @@
+{
+  "mongodb": {
+    "uri": "mongodb://localhost:27017/",
+    "dbname": "store"
+  },
+  "jwt": {
+    "token": {
+      "secret": "B?E(H+MbPeShVmYq3t6w9z$C&F)J@NcR",
+      "exp": "30m"
+    },
+    "refresh": {
+      "secret": "JaNdRgUkXp2r5u8x/A?D(G+KbPeShVmY",
+      "exp": "1h"
+    }
+  },
+  "crypto": {
+    "secret": "6w9z$C&F)J@NcRfUjXn2r5u8x!A%D*G-"
+  },
+  "app": {
+    "port": 4000
+  }
+}

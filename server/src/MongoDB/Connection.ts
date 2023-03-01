@@ -1,12 +1,11 @@
-import { connect, connection } from "mongoose";
+import config from "config";
+import mongoose from "mongoose";
 
-export class db {
-  static async Connect() {
-    return connect("mongodb://localhost:27017/store").catch((err) => {
-      console.log(err);
-    });
-  }
-  static async Close() {
-    return connection.close();
-  }
-}
+mongoose.set("strictQuery", false);
+
+mongoose
+  .connect((config.get("mongodb.uri") as string) + config.get("mongodb.dbname"))
+  .then(() => console.log("MongoDB connected"))
+  .catch((err) => console.log(err));
+
+export default mongoose;

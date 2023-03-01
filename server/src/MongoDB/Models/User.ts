@@ -1,4 +1,6 @@
-import mongoose, { Document, Schema, Model } from "mongoose";
+import { Session } from "../../Middleware/Auth/Models/Session";
+import mongoose from "../Connection";
+import { RefreshToken } from "./RefreshToken";
 
 interface IPermissions {
   permission: string;
@@ -26,9 +28,10 @@ export interface IUser extends Document {
   cardExpiry?: string;
   cardCvc?: string;
   permissions?: IPermissions[];
+  generateSession: () => Promise<Session>;
 }
 
-const userSchema: Schema = new mongoose.Schema(
+const userSchema: mongoose.Schema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -56,7 +59,7 @@ const userSchema: Schema = new mongoose.Schema(
     },
 
     roleId: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Role",
       required: true,
       default: "user",
@@ -97,7 +100,7 @@ const userSchema: Schema = new mongoose.Schema(
     },
     permissions: [
       {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Permission",
       },
     ],
@@ -106,7 +109,18 @@ const userSchema: Schema = new mongoose.Schema(
     timestamps: true,
   }
 );
+userSchema.methods.generateSession = async function () {
+  const session = new Session({ _roleId: this.roleId, _id: this._id });
+  const refresh = new RefreshToken({
+    refreshToken: session.refreshToken,
+    accessToken: session.accessToken,
+    userId: session._id,
+    expires: session.refreshExp,
+  });
+  await refresh.save();
+  return session;
+};
 
-const User: Model<IUser> = mongoose.model<IUser>("User", userSchema);
+const User: mongoose.Model<IUser> = mongoose.model<IUser>("User", userSchema);
 
 export default User;

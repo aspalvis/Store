@@ -1,16 +1,16 @@
-import mongoose, { Document, Schema, Model } from "mongoose";
+import mongoose from "../Connection";
 
-interface IPayment extends Document {
+interface IPayment extends mongoose.Document {
   orderId: string;
   amount: number;
   paymentMethod: string;
   status: string;
 }
 
-const paymentSchema: Schema = new mongoose.Schema(
+const paymentSchema: mongoose.Schema = new mongoose.Schema(
   {
     orderId: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Order",
       required: true,
     },
@@ -33,7 +33,7 @@ const paymentSchema: Schema = new mongoose.Schema(
   }
 );
 
-const Payment: Model<IPayment> = mongoose.model<IPayment>(
+const Payment: mongoose.Model<IPayment> = mongoose.model<IPayment>(
   "Payment",
   paymentSchema
 );

@@ -1,6 +1,6 @@
-import mongoose, { Document, Schema, Model } from "mongoose";
+import mongoose from "../Connection";
 
-interface IPartner extends Document {
+interface IPartner extends mongoose.Document {
   name: string;
   description: string;
   website: string;
@@ -9,7 +9,7 @@ interface IPartner extends Document {
   contactPhone: string;
 }
 
-const partnerSchema: Schema = new mongoose.Schema(
+const partnerSchema: mongoose.Schema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -42,7 +42,7 @@ const partnerSchema: Schema = new mongoose.Schema(
   }
 );
 
-const Partner: Model<IPartner> = mongoose.model<IPartner>(
+const Partner: mongoose.Model<IPartner> = mongoose.model<IPartner>(
   "Partner",
   partnerSchema
 );

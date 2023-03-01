@@ -1,12 +1,12 @@
-import mongoose, { Document, Schema, Model } from "mongoose";
+import mongoose from "../Connection";
 
-interface IPromoCode extends Document {
+interface IPromoCode extends mongoose.Document {
   code: string;
   discount: number;
   expiresAt: Date;
 }
 
-const promoCodeSchema: Schema = new mongoose.Schema(
+const promoCodeSchema: mongoose.Schema = new mongoose.Schema(
   {
     code: {
       type: String,
@@ -27,7 +27,7 @@ const promoCodeSchema: Schema = new mongoose.Schema(
   }
 );
 
-const PromoCode: Model<IPromoCode> = mongoose.model<IPromoCode>(
+const PromoCode: mongoose.Model<IPromoCode> = mongoose.model<IPromoCode>(
   "PromoCode",
   promoCodeSchema
 );

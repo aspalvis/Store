@@ -1,6 +1,6 @@
-import mongoose, { Document, Schema, Model } from "mongoose";
+import mongoose from "../Connection";
 
-interface IProject extends Document {
+interface IProject extends mongoose.Document {
   name: string;
   description: string;
   startDate: Date;
@@ -9,7 +9,7 @@ interface IProject extends Document {
   teamMembers: string[];
 }
 
-const projectSchema: Schema = new mongoose.Schema(
+const projectSchema: mongoose.Schema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -34,7 +34,7 @@ const projectSchema: Schema = new mongoose.Schema(
     },
     teamMembers: [
       {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "User",
       },
     ],
@@ -44,7 +44,7 @@ const projectSchema: Schema = new mongoose.Schema(
   }
 );
 
-const Project: Model<IProject> = mongoose.model<IProject>(
+const Project: mongoose.Model<IProject> = mongoose.model<IProject>(
   "Project",
   projectSchema
 );

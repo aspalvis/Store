@@ -1,18 +1,17 @@
 import express from "express";
-import dotenv from "dotenv";
 import cors from "cors";
-import { PasswordEncrypter } from "./Middleware/PasswordEncrypter";
-import bodyParser from "body-parser";
-import { Logger } from "./Middleware/Logger";
 import helmet from "helmet";
-import { Authentificator } from "./Middleware/Auth/Auth";
+import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
-import mongoose from "mongoose";
-dotenv.config();
+import { PasswordEncrypter } from "./Middleware/PasswordEncrypter";
+import { Logger } from "./Middleware/Logger";
+import { Authentificator } from "./Middleware/Auth/Auth";
 
+import config from "config";
+import db from "./MongoDB/Connection";
 const app: express.Express = express();
-const port = process.env.PORT || 4002;
-mongoose.set("strictQuery", true);
+
+const port = config.get("app.port");
 
 app.use(helmet());
 app.use(express.static("public"));

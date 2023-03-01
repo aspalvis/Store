@@ -1,6 +1,6 @@
-import { Document, Schema, model } from "mongoose";
+import mongoose from "../Connection";
 
-interface IRefreshToken extends Document {
+interface IRefreshToken extends mongoose.Document {
   userId: String;
   refreshToken: string;
   accessToken: string;
@@ -8,9 +8,9 @@ interface IRefreshToken extends Document {
   expires: number;
 }
 
-const refreshTokenSchema = new Schema<IRefreshToken>({
+const refreshTokenSchema = new mongoose.Schema<IRefreshToken>({
   userId: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
   },
@@ -20,7 +20,7 @@ const refreshTokenSchema = new Schema<IRefreshToken>({
   expires: { type: Number, required: true },
 });
 
-export const RefreshToken = model<IRefreshToken>(
+export const RefreshToken = mongoose.model<IRefreshToken>(
   "RefreshToken",
   refreshTokenSchema
 );

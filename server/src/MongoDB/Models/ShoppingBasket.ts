@@ -1,6 +1,6 @@
-import mongoose, { Document, Schema, Model } from "mongoose";
+import mongoose from "../Connection";
 
-interface IShoppingBasket extends Document {
+interface IShoppingBasket extends mongoose.Document {
   userId: string;
   products: {
     productId: string;
@@ -8,17 +8,17 @@ interface IShoppingBasket extends Document {
   }[];
 }
 
-const shoppingBasketSchema: Schema = new mongoose.Schema(
+const shoppingBasketSchema: mongoose.Schema = new mongoose.Schema(
   {
     userId: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
     products: [
       {
         productId: {
-          type: Schema.Types.ObjectId,
+          type: mongoose.Schema.Types.ObjectId,
           ref: "Product",
           required: true,
         },
@@ -35,9 +35,7 @@ const shoppingBasketSchema: Schema = new mongoose.Schema(
   }
 );
 
-const ShoppingBasket: Model<IShoppingBasket> = mongoose.model<IShoppingBasket>(
-  "ShoppingBasket",
-  shoppingBasketSchema
-);
+const ShoppingBasket: mongoose.Model<IShoppingBasket> =
+  mongoose.model<IShoppingBasket>("ShoppingBasket", shoppingBasketSchema);
 
 export default ShoppingBasket;

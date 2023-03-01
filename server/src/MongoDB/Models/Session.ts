@@ -1,6 +1,6 @@
-import mongoose, { Document, Schema, Model } from "mongoose";
+import mongoose from "../Connection";
 
-interface ISession extends Document {
+interface ISession extends mongoose.Document {
   sessionId: string;
   expires: Date;
   data: {
@@ -8,7 +8,7 @@ interface ISession extends Document {
   };
 }
 
-const sessionSchema: Schema = new mongoose.Schema(
+const sessionSchema: mongoose.Schema = new mongoose.Schema(
   {
     sessionId: {
       type: String,
@@ -21,7 +21,7 @@ const sessionSchema: Schema = new mongoose.Schema(
       index: { expires: 0 },
     },
     data: {
-      type: Schema.Types.Mixed,
+      type: mongoose.Schema.Types.Mixed,
       required: true,
     },
   },
@@ -30,7 +30,7 @@ const sessionSchema: Schema = new mongoose.Schema(
   }
 );
 
-const Session: Model<ISession> = mongoose.model<ISession>(
+const Session: mongoose.Model<ISession> = mongoose.model<ISession>(
   "Session",
   sessionSchema
 );

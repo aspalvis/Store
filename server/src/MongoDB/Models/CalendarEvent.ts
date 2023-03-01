@@ -1,6 +1,6 @@
-import mongoose, { Document, Schema, Model } from "mongoose";
+import mongoose from "../Connection";
 
-interface ICalendarEvent extends Document {
+interface ICalendarEvent extends mongoose.Document {
   title: string;
   start: Date;
   end: Date;
@@ -8,7 +8,7 @@ interface ICalendarEvent extends Document {
   description: string;
 }
 
-const calendarEventSchema: Schema = new mongoose.Schema(
+const calendarEventSchema: mongoose.Schema = new mongoose.Schema(
   {
     title: {
       type: String,
@@ -35,9 +35,7 @@ const calendarEventSchema: Schema = new mongoose.Schema(
   }
 );
 
-const CalendarEvent: Model<ICalendarEvent> = mongoose.model<ICalendarEvent>(
-  "CalendarEvent",
-  calendarEventSchema
-);
+const CalendarEvent: mongoose.Model<ICalendarEvent> =
+  mongoose.model<ICalendarEvent>("CalendarEvent", calendarEventSchema);
 
 export default CalendarEvent;

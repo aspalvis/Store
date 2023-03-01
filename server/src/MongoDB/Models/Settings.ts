@@ -1,11 +1,11 @@
-import mongoose, { Document, Schema, Model } from "mongoose";
+import mongoose from "../Connection";
 
-interface ISettings extends Document {
+interface ISettings extends mongoose.Document {
   name: string;
   value: string;
 }
 
-const settingsSchema: Schema = new mongoose.Schema(
+const settingsSchema: mongoose.Schema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -21,7 +21,7 @@ const settingsSchema: Schema = new mongoose.Schema(
   }
 );
 
-const Settings: Model<ISettings> = mongoose.model<ISettings>(
+const Settings: mongoose.Model<ISettings> = mongoose.model<ISettings>(
   "Settings",
   settingsSchema
 );

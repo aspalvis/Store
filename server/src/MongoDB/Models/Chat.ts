@@ -1,17 +1,17 @@
-import mongoose, { Document, Schema, Model } from "mongoose";
+import mongoose from "../Connection";
 
-interface IMessage extends Document {
+interface IMessage extends mongoose.Document {
   senderId: string;
   content: string;
   timestamp: Date;
 }
 
-interface IChat extends Document {
+interface IChat extends mongoose.Document {
   members: string[];
   messages: IMessage[];
 }
 
-const messageSchema: Schema = new mongoose.Schema({
+const messageSchema: mongoose.Schema = new mongoose.Schema({
   senderId: {
     type: String,
     required: true,
@@ -26,7 +26,7 @@ const messageSchema: Schema = new mongoose.Schema({
   },
 });
 
-const chatSchema: Schema = new mongoose.Schema(
+const chatSchema: mongoose.Schema = new mongoose.Schema(
   {
     members: {
       type: [String],
@@ -42,6 +42,6 @@ const chatSchema: Schema = new mongoose.Schema(
   }
 );
 
-const Chat: Model<IChat> = mongoose.model<IChat>("Chat", chatSchema);
+const Chat: mongoose.Model<IChat> = mongoose.model<IChat>("Chat", chatSchema);
 
 export default Chat;
