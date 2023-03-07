@@ -4,7 +4,7 @@ import { UsersController } from "../../MongoDB/Controllers/User";
 const router = Router();
 const usersController = new UsersController();
 
-router.get("", async (req, res) => {
+router.get("", async (req: Request, res: Response) => {
   const users = await usersController.fetch();
   res.json(users);
 });

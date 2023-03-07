@@ -1,13 +1,13 @@
-import mongoose from "../Connection";
+import { db } from "../Connection";
 
-interface IToken extends mongoose.Document {
+interface IToken extends db.Document {
   token: string;
   expires: Date;
   userId: string;
   type: string;
 }
 
-const tokenSchema: mongoose.Schema = new mongoose.Schema(
+const tokenSchema: db.Schema = new db.Schema(
   {
     token: {
       type: String,
@@ -33,6 +33,6 @@ const tokenSchema: mongoose.Schema = new mongoose.Schema(
   }
 );
 
-const Token: mongoose.Model<IToken> = mongoose.model<IToken>("Token", tokenSchema);
+const Token: db.Model<IToken> = db.model<IToken>("Token", tokenSchema);
 
 export default Token;

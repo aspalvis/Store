@@ -1,12 +1,12 @@
-import mongoose from "../Connection";
+import { db } from "../Connection";
 
-interface IEmailTemplate extends mongoose.Document {
+interface IEmailTemplate extends db.Document {
   name: string;
   subject: string;
   body: string;
 }
 
-const emailTemplateSchema: mongoose.Schema = new mongoose.Schema(
+const emailTemplateSchema: db.Schema = new db.Schema(
   {
     name: {
       type: String,
@@ -27,7 +27,9 @@ const emailTemplateSchema: mongoose.Schema = new mongoose.Schema(
   }
 );
 
-const EmailTemplate: mongoose.Model<IEmailTemplate> =
-  mongoose.model<IEmailTemplate>("EmailTemplate", emailTemplateSchema);
+const EmailTemplate: db.Model<IEmailTemplate> = db.model<IEmailTemplate>(
+  "EmailTemplate",
+  emailTemplateSchema
+);
 
 export default EmailTemplate;

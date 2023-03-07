@@ -1,6 +1,6 @@
-import mongoose from "../Connection";
+import { db } from "../Connection";
 
-interface IContract extends mongoose.Document {
+interface IContract extends db.Document {
   title: string;
   description: string;
   startDate: Date;
@@ -10,7 +10,7 @@ interface IContract extends mongoose.Document {
   parties: string[];
 }
 
-const contractSchema: mongoose.Schema = new mongoose.Schema(
+const contractSchema: db.Schema = new db.Schema(
   {
     title: {
       type: String,
@@ -39,7 +39,7 @@ const contractSchema: mongoose.Schema = new mongoose.Schema(
     },
     parties: [
       {
-        type: mongoose.Schema.Types.ObjectId,
+        type: db.Schema.Types.ObjectId,
         ref: "Company",
       },
     ],
@@ -49,7 +49,7 @@ const contractSchema: mongoose.Schema = new mongoose.Schema(
   }
 );
 
-const Contract: mongoose.Model<IContract> = mongoose.model<IContract>(
+const Contract: db.Model<IContract> = db.model<IContract>(
   "Contract",
   contractSchema
 );

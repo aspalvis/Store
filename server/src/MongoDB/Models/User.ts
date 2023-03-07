@@ -1,5 +1,5 @@
 import { Session } from "../../Middleware/Auth/Models/Session";
-import mongoose from "../Connection";
+import { db } from "../Connection";
 import { RefreshToken } from "./RefreshToken";
 
 interface IPermissions {
@@ -31,7 +31,7 @@ export interface IUser extends Document {
   generateSession: () => Promise<Session>;
 }
 
-const userSchema: mongoose.Schema = new mongoose.Schema(
+const userSchema: db.Schema = new db.Schema(
   {
     name: {
       type: String,
@@ -59,7 +59,7 @@ const userSchema: mongoose.Schema = new mongoose.Schema(
     },
 
     roleId: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: db.Schema.Types.ObjectId,
       ref: "Role",
       required: true,
       default: "user",
@@ -100,7 +100,7 @@ const userSchema: mongoose.Schema = new mongoose.Schema(
     },
     permissions: [
       {
-        type: mongoose.Schema.Types.ObjectId,
+        type: db.Schema.Types.ObjectId,
         ref: "Permission",
       },
     ],
@@ -121,6 +121,6 @@ userSchema.methods.generateSession = async function () {
   return session;
 };
 
-const User: mongoose.Model<IUser> = mongoose.model<IUser>("User", userSchema);
+const User: db.Model<IUser> = db.model<IUser>("User", userSchema);
 
 export default User;

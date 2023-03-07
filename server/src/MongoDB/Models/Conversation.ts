@@ -1,4 +1,4 @@
-import mongoose from "../Connection";
+import { db } from "../Connection";
 
 interface IMessage {
   senderId: string;
@@ -6,16 +6,16 @@ interface IMessage {
   timestamp: Date;
 }
 
-interface IConversation extends mongoose.Document {
+interface IConversation extends db.Document {
   participants: string[];
   messages: IMessage[];
 }
 
-const conversationSchema: mongoose.Schema = new mongoose.Schema(
+const conversationSchema: db.Schema = new db.Schema(
   {
     participants: [
       {
-        type: mongoose.Schema.Types.ObjectId,
+        type: db.Schema.Types.ObjectId,
         ref: "User",
         required: true,
       },
@@ -23,7 +23,7 @@ const conversationSchema: mongoose.Schema = new mongoose.Schema(
     messages: [
       {
         senderId: {
-          type: mongoose.Schema.Types.ObjectId,
+          type: db.Schema.Types.ObjectId,
           ref: "User",
           required: true,
         },
@@ -44,7 +44,9 @@ const conversationSchema: mongoose.Schema = new mongoose.Schema(
   }
 );
 
-const Conversation: mongoose.Model<IConversation> =
-  mongoose.model<IConversation>("Conversation", conversationSchema);
+const Conversation: db.Model<IConversation> = db.model<IConversation>(
+  "Conversation",
+  conversationSchema
+);
 
 export default Conversation;

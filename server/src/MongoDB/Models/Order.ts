@@ -1,4 +1,4 @@
-import mongoose from "../Connection";
+import { db } from "../Connection";
 
 interface IProduct {
   product: string;
@@ -14,7 +14,7 @@ interface IShippingAddress {
   country: string;
 }
 
-interface IOrder extends mongoose.Document {
+interface IOrder extends db.Document {
   user: string;
   products: IProduct[];
   shippingAddress: IShippingAddress;
@@ -29,17 +29,17 @@ interface IOrder extends mongoose.Document {
   deliveredAt: Date;
 }
 
-const orderSchema: mongoose.Schema = new mongoose.Schema(
+const orderSchema: db.Schema = new db.Schema(
   {
     user: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: db.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
     products: [
       {
         product: {
-          type: mongoose.Schema.Types.ObjectId,
+          type: db.Schema.Types.ObjectId,
           ref: "Product",
           required: true,
         },
@@ -117,9 +117,6 @@ const orderSchema: mongoose.Schema = new mongoose.Schema(
   }
 );
 
-const Order: mongoose.Model<IOrder> = mongoose.model<IOrder>(
-  "Order",
-  orderSchema
-);
+const Order: db.Model<IOrder> = db.model<IOrder>("Order", orderSchema);
 
 export default Order;

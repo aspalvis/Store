@@ -1,8 +1,4 @@
 {
-  "mongodb": {
-    "uri": "mongodb://localhost:27017/",
-    "dbname": "store"
-  },
   "jwt": {
     "token": {
       "secret": "B?E(H+MbPeShVmYq3t6w9z$C&F)J@NcR",

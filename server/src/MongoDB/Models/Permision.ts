@@ -1,11 +1,11 @@
-import mongoose from "../Connection";
+import { db } from "../Connection";
 
-interface IPermission extends mongoose.Document {
+interface IPermission extends db.Document {
   name: string;
   description: string;
 }
 
-const permissionSchema: mongoose.Schema = new mongoose.Schema(
+const permissionSchema: db.Schema = new db.Schema(
   {
     name: {
       type: String,
@@ -22,7 +22,7 @@ const permissionSchema: mongoose.Schema = new mongoose.Schema(
   }
 );
 
-const Permission: mongoose.Model<IPermission> = mongoose.model<IPermission>(
+const Permission: db.Model<IPermission> = db.model<IPermission>(
   "Permission",
   permissionSchema
 );

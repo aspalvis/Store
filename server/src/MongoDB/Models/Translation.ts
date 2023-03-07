@@ -1,11 +1,11 @@
-import mongoose from "../Connection";
+import { db } from "../Connection";
 
-interface ITranslation extends mongoose.Document {
+interface ITranslation extends db.Document {
   key: string;
   values: Record<string, string>;
 }
 
-const translationSchema: mongoose.Schema = new mongoose.Schema(
+const translationSchema: db.Schema = new db.Schema(
   {
     key: {
       type: String,
@@ -23,7 +23,7 @@ const translationSchema: mongoose.Schema = new mongoose.Schema(
   }
 );
 
-const Translation: mongoose.Model<ITranslation> = mongoose.model<ITranslation>(
+const Translation: db.Model<ITranslation> = db.model<ITranslation>(
   "Translation",
   translationSchema
 );

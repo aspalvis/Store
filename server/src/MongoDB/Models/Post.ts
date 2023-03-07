@@ -1,18 +1,18 @@
-import mongoose from "../Connection";
+import { db } from "../Connection";
 
-interface IPost extends mongoose.Document {
+interface IPost extends db.Document {
   title: string;
   content: string;
-  author: mongoose.Schema.Types.ObjectId;
+  author: db.Schema.Types.ObjectId;
   tags: string[];
   comments: {
-    author: mongoose.Schema.Types.ObjectId;
+    author: db.Schema.Types.ObjectId;
     content: string;
     postedAt: Date;
   }[];
 }
 
-const postSchema: mongoose.Schema = new mongoose.Schema(
+const postSchema: db.Schema = new db.Schema(
   {
     title: {
       type: String,
@@ -23,7 +23,7 @@ const postSchema: mongoose.Schema = new mongoose.Schema(
       required: true,
     },
     author: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: db.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
@@ -31,7 +31,7 @@ const postSchema: mongoose.Schema = new mongoose.Schema(
     comments: [
       {
         author: {
-          type: mongoose.Schema.Types.ObjectId,
+          type: db.Schema.Types.ObjectId,
           ref: "User",
           required: true,
         },
@@ -51,6 +51,6 @@ const postSchema: mongoose.Schema = new mongoose.Schema(
   }
 );
 
-const Post: mongoose.Model<IPost> = mongoose.model<IPost>("Post", postSchema);
+const Post: db.Model<IPost> = db.model<IPost>("Post", postSchema);
 
 export default Post;

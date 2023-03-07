@@ -1,0 +1,19 @@
+{
+  "jwt": {
+    "token": {
+      "secret": "ISJDFNUAHFDUIASDI12",
+      "exp": "30m"
+    },
+    "refresh": {
+      "secret": "214IHXNF8AYSF8USDFNUA921Y",
+      "exp": "1h"
+    }
+  },
+  "crypto": {
+    "secret": "AXCNYASDT67QN3UG16HFOPAS[OKA90"
+  },
+  "mongodb": {
+    "uri": "mongodb://localhost:27017/",
+    "dbname": "store_test"
+  }
+}

@@ -1,10 +1,11 @@
 import { Router, Request, Response } from "express";
 import { RolesController } from "../../MongoDB/Controllers/Roles";
+import { asyncMiddleware } from "../../Middleware/Async";
 
 const router = Router();
 const rolesController = new RolesController();
 
-router.get("", async (req, res) => {
+router.get("", async (req: Request, res: Response) => {
   const roles = await rolesController.fetch();
   res.json(roles);
 });

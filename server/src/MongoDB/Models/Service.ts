@@ -1,6 +1,6 @@
-import mongoose from "../Connection";
+import { db } from "../Connection";
 
-interface IService extends mongoose.Document {
+interface IService extends db.Document {
   name: string;
   description: string;
   price: number;
@@ -9,7 +9,7 @@ interface IService extends mongoose.Document {
   providerId: string;
 }
 
-const serviceSchema: mongoose.Schema = new mongoose.Schema(
+const serviceSchema: db.Schema = new db.Schema(
   {
     name: {
       type: String,
@@ -43,7 +43,7 @@ const serviceSchema: mongoose.Schema = new mongoose.Schema(
   }
 );
 
-const Service: mongoose.Model<IService> = mongoose.model<IService>(
+const Service: db.Model<IService> = db.model<IService>(
   "Service",
   serviceSchema
 );
