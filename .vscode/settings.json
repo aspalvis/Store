@@ -5,6 +5,12 @@
     "reloadButton": "♻️", // Custom reload button text or icon (default ↻). null value enables automatic reload on configuration change
     "commands": [
       {
+        "name": "Docker build",
+        "color": "white",
+        "singleInstance": true,
+        "command": "docker build -t spalvisstore ." // This is executed in the terminal.
+      },
+      {
         "name": "NVM 18",
         "color": "white",
         "singleInstance": true,
