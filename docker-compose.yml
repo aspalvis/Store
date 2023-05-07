@@ -1,0 +1,25 @@
+services:
+  web:
+    build: ./client
+    ports:
+      - 3000:3000
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./client:/app/client
+  api:
+    build: ./server
+    ports:
+      - 3001:3001
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./server:/app/server
+  db:
+    image: mongo:6.0.5-jammy
+    ports:
+      - 27017:27017
+    volumes:
+      - store:/data/db
+volumes:
+  store:

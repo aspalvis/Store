@@ -1,0 +1,26 @@
+services:
+  web:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.prod
+    ports:
+      - 80:80
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+
+  api:
+    build: ./server
+    ports:
+      - 3001:3001
+    environment:
+      - NODE_ENV=production
+
+  db:
+    image: mongo:6.0.5-jammy
+    ports:
+      - 27017:27017
+    volumes:
+      - store:/data/db
+volumes:
+  store:

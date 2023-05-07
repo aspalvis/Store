@@ -1,0 +1,15 @@
+# Step 1: Build stage
+FROM node:alpine3.17 AS build-stage
+WORKDIR /app/client
+COPY package*.json ./
+RUN npm ci 
+COPY . .
+RUN npm run build
+# Step 2: For production
+FROM nginx:stable-alpine3.17-slim AS production-stage
+RUN addgroup app && adduser -S -G app app
+USER app
+COPY --from=build-stage /app/client/dist /usr/share/nginx/html
+EXPOSE 80
+ENTRYPOINT [ "nginx","-g","daemon off;" ]
+

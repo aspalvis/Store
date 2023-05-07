@@ -1,7 +1,7 @@
 {
   "name": "Backend solution for ecommerce",
   "mongodb": {
-    "uri": "mongodb://localhost:27017/",
+    "uri": "mongodb://db/",
     "dbname": "store"
   }
 }
